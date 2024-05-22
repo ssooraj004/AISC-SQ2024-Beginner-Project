@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scikit-learn Model Prediction</title>
+</head>
+<body>
+    <h1>Scikit-learn Model Prediction</h1>
+    <input type="text" id="input" placeholder="Enter features comma-separated">
+    <button onclick="getPrediction()">Predict</button>
+    <p id="result"></p>
+
+    <script>
+        async function getPrediction() {
+            const input = document.getElementById('input').value;
+            const features = input.split(',').map(Number);
+
+            const response = await fetch('http://127.0.0.1:5000/predict', {  // Change this to your backend URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ features })
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerText = `Prediction: ${result.prediction[0]}`;
+        }
+    </script>
+</body>
+</html>
