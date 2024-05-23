@@ -57,12 +57,16 @@ To replicate or further develop this project, follow these steps:
 ```bash
 git clone https://github.com/ssooraj004/AISC-SQ2024-Beginner-Project.git
 cd AISC-SQ2024-Beginner-Project
+
 # Install required Python packages
 pip install pandas numpy scikit-learn matplotlib seaborn
+
 # Run the Jupyter notebooks
 jupyter notebook
+
 # Run the flask
 flask run
+
 # Run the front end (UI)
 cd templates
 npm run dev
