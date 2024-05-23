@@ -18,17 +18,17 @@
         <h1>Diabetes Risk Prediction Model</h1>
 
         <div class="container">
-            <label for="glucose">Glucose:</label>
-            <input type="number" id="glucose" placeholder="Enter Glucose">
-            <br>
             <label for="bmi">BMI:</label>
             <input type="number" id="bmi" placeholder="Enter BMI">
             <br>
+            <label for="dpf">Diabetes Pedigree Function:</label>
+            <input type="number" id="dpf" placeholder="Enter DPF">
+            <br>
+            <label for="glucose">Glucose:</label>
+            <input type="number" id="glucose" placeholder="Enter Glucose">
+            <br>
             <label for="age">Age:</label>
             <input type="number" id="age" placeholder="Enter Age">
-            <br>
-            <label for="dpf">Diabetes Pedigree Function:</label>
-            <input type="number" id="dpf" placeholder="Enter Diabetes Pedigree Function">
             <br>
             <label for="bloodPressure">Blood Pressure:</label>
             <input type="number" id="bloodPressure" placeholder="Enter Blood Pressure">
@@ -40,18 +40,18 @@
 
     <script>
         async function getPrediction() {
-            const glucose = document.getElementById('glucose').value.trim();
             const bmi = document.getElementById('bmi').value.trim();
-            const age = document.getElementById('age').value.trim();
             const dpf = document.getElementById('dpf').value.trim();
+            const glucose = document.getElementById('glucose').value.trim();
+            const age = document.getElementById('age').value.trim();
             const bloodPressure = document.getElementById('bloodPressure').value.trim();
 
-            if (!glucose || !bmi || !age || !dpf || !bloodPressure) {
+            if (!bmi || !dpf || !glucose || !age || !bloodPressure) {
                 alert("Please fill in all fields with valid numbers.");
                 return;
             }
 
-            const features = [parseFloat(glucose), parseFloat(bmi), parseFloat(age), parseFloat(dpf), parseFloat(bloodPressure)];
+            const features = [parseFloat(bmi), parseFloat(dpf), parseFloat(glucose), parseFloat(age), parseFloat(bloodPressure)];
 
             const response = await fetch('http://127.0.0.1:5000/predict', {  // Change this to your backend URL
                 method: 'POST',
@@ -61,7 +61,8 @@
                 body: JSON.stringify({ features })
             });
 
-            const result = await response.json();
+            const res = await response.json();
+            const result = res.prediction;
 
             if (result == 1) {
                 document.getElementById('result').innerText = "Result: Positive";

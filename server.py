@@ -7,7 +7,7 @@ import numpy as np
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-with open('log_model.pkl', 'rb') as file:
+with open('rf_model.pkl', 'rb') as file:
     model = pickle.load(file)
 
 # ----------------- Routes -----------------
@@ -21,8 +21,9 @@ def about():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.json
-    features = np.array(data['features']).reshape(1, -1)
+    req = request.json
+    data = req['features']
+    features = np.array(data).reshape(1, -1)
     prediction = model.predict(features)
     return jsonify({'prediction': prediction.tolist()})
 
